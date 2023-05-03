@@ -8,9 +8,9 @@
 
     stages{
 
-        stage("init"){
+        stage("init") {
             steps{
-                script{
+                script {
                     gv = load "script.groovy"
                 }
             }
@@ -18,7 +18,7 @@
 
         stage("build jar"){
             steps{
-                scripts{
+                script{
                     gv.buildJar()
                 }
             }
@@ -26,7 +26,7 @@
 
         stage("build image"){
             steps{
-                scripts{
+                script{
                     gv.buildImage()
                 }
             }
@@ -34,7 +34,7 @@
 
         stage("deploy"){
             steps{
-                scripts{
+                script{
                   gv.deploy()  
                 }
             }
