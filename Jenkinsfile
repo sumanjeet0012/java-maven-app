@@ -1,38 +1,38 @@
-def gv
-
-pipeline {
+ pipeline {
     agent any
-    stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
+
+    stages{
+
+        stage("build jar"){
+            steps{
+                script{
+                    echo "building the application"
                 }
             }
         }
-        stage("build jar") {
-            steps {
-                script {
-                    echo "building jar"
-                    //gv.buildJar()
+
+        stage("build image"){
+            steps{
+                script{
+                    echo "building the docker image"
                 }
             }
         }
-        stage("build image") {
+
+        stage("deploy"){
             steps {
-                script {
-                    echo "building image"
-                    //gv.buildImage()
-                }
+         //       script {
+                 echo 'entered in deploy stage'
+             //     def dockerCmd =  "docker run -d -p 3080:80 sumanjeet0012/react-node-example:1.0"
+                  sshagent (credentials: ['ec22-server-key']) { // use credential ID
+                        ssh "-o StrictHostKeyChecking=no ec2-user@54.253.177.19"
+                  
+                 // sshagent(['ec2-server-key']) {
+                   //     ssh "ssh -0 StrictHostKeyChecking=no ec2-user@54.253.177.19 ${dockerCmd}"
+                        }
+         //       }
             }
         }
-        stage("deploy") {
-            steps {
-                script {
-                    echo "deploying"
-                    //gv.deployApp()
-                }
-            }
-        }
-    }   
-}
+
+    }
+ }
