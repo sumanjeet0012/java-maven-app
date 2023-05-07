@@ -5,18 +5,10 @@
 
     stages{
 
-        stage("init") {
-            steps{
-                script {
-                    gv = load "script.groovy"
-                }
-            }
-        }
-
         stage("build jar"){
             steps{
                 script{
-                    gv.buildJar()
+                    echo "building the application"
                 }
             }
         }
@@ -24,7 +16,7 @@
         stage("build image"){
             steps{
                 script{
-                    gv.buildImage()
+                    echo "building the docker image"
                 }
             }
         }
@@ -32,7 +24,9 @@
         stage("deploy"){
             steps{
                 script{
-                  gv.deploy()  
+                  def dockerCmd =  "docker run -d -p 3080:80 sumanjeet0012/react-node-example:1.0"
+                  sshagent(['ec2-server-key']) {
+                        ssh "ssh -0 StrictHostKeyChecking=no ec2-user@54.253.177.19 ${dockerCmd}"
                 }
             }
         }
