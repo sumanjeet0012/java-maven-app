@@ -30,6 +30,7 @@
                  // sshagent(['ec2-server-key']) {
                    //     ssh "ssh -0 StrictHostKeyChecking=no ec2-user@54.253.177.19 ${dockerCmd}"
                         }
+                 echo 'exited from deploy state'
                  }
             }
         }
